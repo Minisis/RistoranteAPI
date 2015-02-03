@@ -27,7 +27,7 @@ function cleanDb (cb) {
 			cb(null);
 		}
 	});
-};
+}
 
 describe('Security\/Tokens Unit Test' , function() {
 	before('Create DB Connection' , function(done) {
@@ -37,14 +37,16 @@ describe('Security\/Tokens Unit Test' , function() {
 			done();
 		});
 	});
-	describe('#Create tokens /security/tokens POST' , function() {
+	describe('#Create unique tokens /security/tokens POST' , function() {
 		beforeEach('Dropping users collection' , function(done) {
 			cleanDb(done);
 		});
 		it('Should return 201' , function(done) {
-			var nUser = {
+			var oldTkn,
+					nUser = {
 				email : 'example@gmail.com',
-				password : 'example'
+				password : 'example',
+				type : 'local'
 			};
 			//create new user...
 			request(app)
@@ -54,8 +56,10 @@ describe('Security\/Tokens Unit Test' , function() {
 				.expect('Content-Type' , /json/)
 				.end(function(err , res) {
 					var body = res.body;
-					body.data.token.should.be.a.String;
-					body.data.token.should.not.be.empty;
+					body.data.token.should.be.an.Object;
+					body.data.token.hash.should.be.a.String;
+					body.data.token.hash.should.not.be.empty;
+					oldTkn = body.data.token;
 					should(err).not.be.ok;
 					//new user's created, let's test his access..	
 					request(app)
@@ -72,8 +76,10 @@ describe('Security\/Tokens Unit Test' , function() {
 							body.code.should.equal(201);
 							body.message.should.be.a.String;
 							body.message.should.be.empty;
-							body.data.token.should.be.String;
-							body.data.token.should.not.be.empty;
+							body.data.token.should.be.an.Object;
+							body.data.token.hash.should.be.a.String;
+							body.data.token.hash.should.not.be.empty;
+							oldTkn.should.not.eql(body.data.token);
 							done();	
 						});
 				});

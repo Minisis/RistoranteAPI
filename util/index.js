@@ -1,8 +1,9 @@
-var crypto = require('crypto');
-var util = {};
+'use strict';
+
+var crypto = require('crypto'),
+		util = {};
 
 util.wrappedResponse = function (spec) {
-	'use strict';
 	//getting parameters...
 	var res = spec.res;
 	var code = spec.code;
@@ -30,15 +31,12 @@ util.wrappedResponse = function (spec) {
 
 util.crypto = {
 	createSalt : function(bytes , cb) {
-		'use strict';
 		crypto.randomBytes(bytes , function(err , buf) {
-			'use strict';
 			if (err) return cb(err , null);
 			cb(null , buf.toString());
 		});
 	},
 	createHash : function(pass , salt , hash) {
-		'use strict';
 		var hash = crypto.createHash(hash);
 		hash.update(pass);
 		hash.update(salt);
@@ -47,7 +45,6 @@ util.crypto = {
 };
 
 util.cors = function(spec) {
-	'use strict';
 	var origin = spec.origin,
 			methods = spec.methods,
 			headers = spec.headers;

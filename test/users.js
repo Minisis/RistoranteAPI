@@ -28,7 +28,8 @@ function cleanDb (cb) {
 			cb(null);
 		}
 	});
-};
+}
+
 describe('Users Unit Test' , function() {
 	before('Create DB connection' , function(done) {
 		MongoClient.connect(dbConfig.conStr , function(err , db) {

@@ -11,7 +11,7 @@ config.development = {
 		name : 'http://localhost:3000'
 	},
 	client : {
-		origin : 'http://openshiftserver.com',
+		origin : 'http://localhost:3000',
 		methods : 'PUT, GET, POST, DELETE, OPTIONS',
 		headers : 'Content-Type, Authorization, Accept'
 	}
@@ -28,8 +28,8 @@ config.production = {
 	server : {
 		ip : process.env.OPENSHIFT_NODEJS_IP,
 		port : process.env.OPENSHIFT_NODEJS_PORT,
-		name : 'http://nodejs-pizapi.rhcloud.com'
-	},
+		name : 	'http://localhost:9001'
+},
 	client : {
 		origin : 'http://localhost:9001',
 		methods : 'PUT, GET, POST, DELETE, OPTIONS',

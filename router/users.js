@@ -40,7 +40,7 @@ router.post('/', function(req , res , next) {
 		//encrypt password
 		password : function(callback) {
 			crypto.createSalt(32 , function(err , salt) {
-				if (err) return callback(err , null); 
+				if (err) return callback(err , null);
 				callback(null , { salt : salt,
 						   		  			hash : crypto.createHash(user.password , salt , 'sha512') });
 
